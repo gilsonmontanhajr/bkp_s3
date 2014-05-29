@@ -51,7 +51,7 @@ function geralista(){
       echo "---" >> $DIR_LOGS"mensagens.log"
       sleep 2;
     else
-      echo "Diretório ARQUIVOSdo projeto ${linha} NÃO existe !" >> $DIR_LOGS"mensagens.log"
+      echo "Diretório ARQUIVOS do projeto ${linha} NÃO existe !" >> $DIR_LOGS"mensagens.log"
     fi
 
   done < $DIR_LOGS"lista-"$HJ_DT".log"
