@@ -47,11 +47,10 @@ function geralista(){
       # s3cmd sync --verbose --exclude 'temp/*' /var/www/html/projeto/arquivos/ s3://bkp_manusis.wolk.com.br/projeto/ >> /var/log/bkp/log.log
       $SYNC $DIR_HTML$linha"arquivos/" $S3POOL$linha >> $DIR_LOGS$HJ_DT".log"
       # Escrevendo as mensagens para enviar por email.
-      echo "Sincronização do projeto ${linha} está OK !" >> $DIR_LOGS"mensagens.log"
-      echo "---" >> $DIR_LOGS"mensagens.log"
+      echo "Sincronização do projeto ${linha} está OK !" >> $DIR_LOGS"mensagens${HJ_DATA}.log"
       sleep 2;
     else
-      echo "Diretório ARQUIVOS do projeto ${linha} NÃO existe !" >> $DIR_LOGS"mensagens.log"
+      echo "Diretório ARQUIVOS do projeto ${linha} NÃO existe !" >> $DIR_LOGS"mensagens${HJ_DATA}.log"
     fi
 
   done < $DIR_LOGS"lista-"$HJ_DT".log"
@@ -59,7 +58,7 @@ function geralista(){
 
 function enviaemail(){
   # Enviando email
-  cat $DIR_LOGS"mensagens.log" | mail -s bkp_manusis_${HJ_DT} infra@wolk.com.br
+  cat $DIR_LOGS"mensagens${HJ_DT}.log" | mail -s bkp_manusis_${HJ_DT} infra@wolk.com.br
 }
 
 
