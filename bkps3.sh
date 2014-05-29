@@ -3,12 +3,14 @@
 # variáveis do sistema
 EU=`whoami`
 MEUDIR=`pwd`
+APP=`which s3cmd`
 DIR_LOGS="/var/log/bkp-s3/"
 DIR_HTML="/var/www/html/"
 HJ_DT=`date +%d-%m-%y`
 HJ_HR=`date +%H:%M:%S`
-SYNC=`s3cmd sync --verbose --exclude 'temp/'`
+SYNC="${APP} sync --verbose --exclude 'temp/'"
 S3POOL="s3://bkp_manusis.wolk.com.br/"
+
 
 # Criando Diretórios de log e arquivos
 # Função responsável por ver se diretório /var/log/bkp-s3 existe.
@@ -48,8 +50,6 @@ function geralista(){
       echo "Sincronização do projeto ${linha} está OK !" >> $DIR_LOGS"mensagens.log"
       echo "---" >> $DIR_LOGS"mensagens.log"
       sleep 2;
-      # Enviando email
-      cat $DIR_LOGS"mensagens.log" | mail -s bkp_manusis_${HJ_DT} infra@wolk.com.br
     else
       echo "Diretório ARQUIVOSdo projeto ${linha} NÃO existe !" >> $DIR_LOGS"mensagens.log"
     fi
@@ -57,6 +57,12 @@ function geralista(){
   done < $DIR_LOGS"lista-"$HJ_DT".log"
 }
 
+function enviaemail(){
+  # Enviando email
+  cat $DIR_LOGS"mensagens.log" | mail -s bkp_manusis_${HJ_DT} infra@wolk.com.br
+}
+
 
 geradirs
 geralista
+enviaemail
