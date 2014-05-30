@@ -20,12 +20,12 @@ S3POOL="s3://bkp_manusis.wolk.com.br/"
 # 3 : lista-DATA.log  -> Gera a lista de diretórios
 function geradirs(){
   if [ -e $DIR_LOGS ]; then
-    touch $DIR_LOGS"mensagens.log"
+    touch $DIR_LOGS"mensagens-"$HJ_DT".log"
     touch $DIR_LOGS$HJ_DT.log
     touch $DIR_LOGS"lista-"$HJ_DT".log"
   else
     mkdir -p $DIR_LOGS
-    touch $DIR_LOGS"mensagens.log"
+    touch $DIR_LOGS"mensagens"$HJ_DT".log"
     touch $DIR_LOGS$HJ_DT.log
     touch $DIR_LOGS"lista-"$HJ_DT".log"
   fi
